@@ -1,14 +1,17 @@
+#!/usr/bin/env python3
 class GardenError(Exception):
-    def __init__(self,messege: str = "Unknown Garden error"):
-        super().__init__(messege)
-    
+    def __init__(self, message: str = "Unknown garden error"):
+        super().__init__(message)
+
+
 class PlantError(GardenError):
-    def __init__(self,messege: str = "Unknown plant error"):
-        super().__init__(messege)
+    def __init__(self, message: str = "Unknown plant error"):
+        super().__init__(message)
+
 
 class WaterError(GardenError):
-    def __init__(self,messege: str = "Unknown Water error" ):
-        super().__init__(messege)
+    def __init__(self, message: str = "Unknown water error"):
+        super().__init__(message)
 
 
 def water_plant(plant_name: str) -> None:
@@ -16,12 +19,13 @@ def water_plant(plant_name: str) -> None:
         print(f"Watering {plant_name}: [OK]")
     else:
         raise PlantError(f"Invalid plant name to water: '{plant_name}'")
-    
+
+
 def test_watering_system() -> None:
-    def test(vegitable: list) -> None:
+    def test(vegetables: list[str]) -> None:
         print("Opening watering system")
         try:
-            for v in vegitable:
+            for v in vegetables:
                 water_plant(v)
         except PlantError as e:
             print(f"Caught PlantError: {e}")
@@ -29,22 +33,23 @@ def test_watering_system() -> None:
             return
         finally:
             print("Closing watering system")
-            
-    vegitable: list = [
+
+    vegetables: list[str] = [
         "Tomato",
         "Lettuce",
         "Carrots"
     ]
-    e_vegitable: list = [
+    invalid_vegetables: list[str] = [
         "Tomato",
         "lettuce",
         "Carrots"
     ]
     print("Testing valid plants...")
-    test(vegitable)
+    test(vegetables)
     print()
     print("Testing invalid plants...")
-    test(e_vegitable)
+    test(invalid_vegetables)
+
 
 if __name__ == "__main__":
     print("=== Garden Watering System ===")
